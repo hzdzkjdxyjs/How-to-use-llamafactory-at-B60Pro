@@ -18,7 +18,8 @@ def main():
 if __name__ == "__main__":
     main()
 ````
-<img width="1241" height="406" alt="image" src="https://github.com/user-attachments/assets/5b234187-4ba6-49cb-ab4d-afd97ea14a22" />
+
+<img width="1037" height="202" alt="image" src="https://github.com/user-attachments/assets/28fd10fc-0e52-4b3b-8889-df8081bc76eb" />
 
  - oneccl通信，（创建文件 执行脚本）
 
