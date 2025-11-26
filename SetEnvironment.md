@@ -56,6 +56,8 @@ conda activate b60
 ```bash
 cd LLaMA-Factory
 pip install torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/xpu
+pip install intel-extension-for-pytorch==2.8.10+xpu --extra-index-url https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
+pip install oneccl_bind_pt==2.8.0+xpu --index-url https://pytorch-extension.intel.com/release-whl/stable/xpu/us/
 pip install -e ".[metrics]" --no-build-isolation
 ````
  - 检查torch安装情况，和我一样就是安装完成了
