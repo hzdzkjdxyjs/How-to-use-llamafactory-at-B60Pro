@@ -40,11 +40,11 @@ if __name__ == "__main__":
 
 ## 设置环境变量开始多机训练
 ```python
-export ZE_AFFINITY_MASK=0.1       # 两张 GPU
-export CCL_WORKER_COUNT=2
-export CCL_LOG_LEVEL=info
-export FI_PROVIDER=tcp
-export CCL_ZE_IPC_EXCHANGE=sockets
+ZE_AFFINITY_MASK=0.1       # 两张 GPU
+CCL_WORKER_COUNT=2
+CCL_LOG_LEVEL=info
+FI_PROVIDER=tcp
+CCL_ZE_IPC_EXCHANGE=sockets
 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
 ````
 
