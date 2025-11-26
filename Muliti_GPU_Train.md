@@ -714,4 +714,440 @@ Figure saved at: saves/Kllama_Qwen3-0.6B/training_loss.png
 2025:11:26-12:53:11:(4016676) |CCL_INFO| finalizing level-zero
 2025:11:26-12:53:11:(4016676) |CCL_INFO| finalized level-zero                                                                 
  ```
-</details>
+</details
+
+ # 但是如果使用MPI通信框架则
+```bash
+export CCL_ATL_TRANSPORT=mpi
+export CCL_ZE_IPC_EXCHANGE=sockets
+export FI_PROVIDER=tcp
+export ZE_FLAT_DEVICE_HIERARCHY=COMPOSITE
+llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
+````
+ - 但是似乎不支持训练
+<details><summary> 点击展开训练过程 </summary>
+
+```
+[INFO|2025-11-26 13:08:41] llamafactory.launcher:143 >> Initializing 2 distributed tasks at: 127.0.0.1:51481
+[INFO|2025-11-26 13:08:42] llamafactory.launcher:143 >> Initializing 2 distributed tasks at: 127.0.0.1:45265
+W1126 13:08:43.134000 140616 site-packages/torch/distributed/run.py:774] 
+W1126 13:08:43.134000 140616 site-packages/torch/distributed/run.py:774] *****************************************
+W1126 13:08:43.134000 140616 site-packages/torch/distributed/run.py:774] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1126 13:08:43.134000 140616 site-packages/torch/distributed/run.py:774] *****************************************
+W1126 13:08:43.307000 140655 site-packages/torch/distributed/run.py:774] 
+W1126 13:08:43.307000 140655 site-packages/torch/distributed/run.py:774] *****************************************
+W1126 13:08:43.307000 140655 site-packages/torch/distributed/run.py:774] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1126 13:08:43.307000 140655 site-packages/torch/distributed/run.py:774] *****************************************
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[W1126 13:08:47.819292275 OperatorEntry.cpp:218] Warning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: aten::geometric_(Tensor(a!) self, float p, *, Generator? generator=None) -> Tensor(a!)
+    registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+  dispatch key: XPU
+  previous kernel: registered at /pytorch/aten/src/ATen/VmapModeRegistrations.cpp:37
+       new kernel: registered at /build/intel-pytorch-extension/build/Release/csrc/gpu/csrc/gpu/xpu/ATen/RegisterXPU_0.cpp:172 (function operator())
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+My guessed rank = 1
+[W1126 13:08:47.103702133 OperatorEntry.cpp:218] Warning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: aten::geometric_(Tensor(a!) self, float p, *, Generator? generator=None) -> Tensor(a!)
+    registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+  dispatch key: XPU
+  previous kernel: registered at /pytorch/aten/src/ATen/VmapModeRegistrations.cpp:37
+       new kernel: registered at /build/intel-pytorch-extension/build/Release/csrc/gpu/csrc/gpu/xpu/ATen/RegisterXPU_0.cpp:172 (function operator())
+My guessed rank = 0
+[W1126 13:08:47.228211471 OperatorEntry.cpp:218] Warning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: aten::geometric_(Tensor(a!) self, float p, *, Generator? generator=None) -> Tensor(a!)
+    registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+  dispatch key: XPU
+  previous kernel: registered at /pytorch/aten/src/ATen/VmapModeRegistrations.cpp:37
+       new kernel: registered at /build/intel-pytorch-extension/build/Release/csrc/gpu/csrc/gpu/xpu/ATen/RegisterXPU_0.cpp:172 (function operator())
+[W1126 13:08:47.228211394 OperatorEntry.cpp:218] Warning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: aten::geometric_(Tensor(a!) self, float p, *, Generator? generator=None) -> Tensor(a!)
+    registered at /pytorch/build/aten/src/ATen/RegisterSchema.cpp:6
+  dispatch key: XPU
+  previous kernel: registered at /pytorch/aten/src/ATen/VmapModeRegistrations.cpp:37
+       new kernel: registered at /build/intel-pytorch-extension/build/Release/csrc/gpu/csrc/gpu/xpu/ATen/RegisterXPU_0.cpp:172 (function operator())
+My guessed rank = 0
+My guessed rank = 1
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:468 >> Process rank: 1, world size: 2, device: xpu:1, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:143 >> Set `ddp_find_unused_parameters` to False in DDP training since LoRA is enabled.
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:468 >> Process rank: 0, world size: 2, device: xpu:0, distributed training: True, compute dtype: torch.bfloat16
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,581 >> loading file chat_template.jinja
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:143 >> Set `ddp_find_unused_parameters` to False in DDP training since LoRA is enabled.
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:468 >> Process rank: 0, world size: 2, device: xpu:0, distributed training: True, compute dtype: torch.bfloat16
+[INFO|2025-11-26 13:08:48] llamafactory.hparams.parser:468 >> Process rank: 1, world size: 2, device: xpu:1, distributed training: True, compute dtype: torch.bfloat16
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,723 >> loading file chat_template.jinja
+[INFO|tokenization_utils_base.py:2364] 2025-11-26 13:08:48,854 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:763] 2025-11-26 13:08:48,855 >> loading configuration file /root/models/Qwen3-0.6B/config.json
+[INFO|configuration_utils.py:839] 2025-11-26 13:08:48,856 >> Model config Qwen3Config {
+  "architectures": [
+    "Qwen3ForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "dtype": "bfloat16",
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 1024,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_types": [
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention"
+  ],
+  "max_position_embeddings": 40960,
+  "max_window_layers": 28,
+  "model_type": "qwen3",
+  "num_attention_heads": 16,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 8,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000,
+  "sliding_window": null,
+  "tie_word_embeddings": true,
+  "transformers_version": "4.57.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:48,857 >> loading file chat_template.jinja
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+2025:11:26-13:08:48:(140879) |CCL_WARN| value of CCL_LOG_LEVEL changed to be info (default:warn)
+2025:11:26-13:08:48:(140879) |CCL_WARN| value of CCL_WORKER_COUNT changed to be 4 (default:1)
+2025:11:26-13:08:48:(140879) |CCL_WARN| value of CCL_ZE_IPC_EXCHANGE changed to be sockets (default:pidfd)
+2025:11:26-13:08:48:(140879) |CCL_INFO| process launcher: hydra, local_proc_idx: 0, local_proc_count: 2
+2025:11:26-13:08:48:(140879) |CCL_INFO| initializing level-zero api
+2025:11:26-13:08:48:(140879) |CCL_INFO| initializing level-zero
+2025:11:26-13:08:48:(140879) |CCL_INFO| Total hardware threads: 1280
+2025:11:26-13:08:48:(140879) |CCL_INFO| auto tune with port counts enabled
+2025:11:26-13:08:48:(140879) |CCL_INFO| ze fabric ports: 0 were able to be detected
+2025:11:26-13:08:48:(140879) |CCL_INFO| initialized level-zero
+2025:11:26-13:08:48:(140879) |CCL_INFO| could not initialize umf api
+2025:11:26-13:08:48:(140879) |CCL_INFO| OS info: { Linux b60 6.14.0-1006-intel #6-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  1 00:03:01 UTC 2025 x86_64 }
+[INFO|tokenization_utils_base.py:2364] 2025-11-26 13:08:48,998 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|configuration_utils.py:763] 2025-11-26 13:08:48,998 >> loading configuration file /root/models/Qwen3-0.6B/config.json
+[INFO|configuration_utils.py:839] 2025-11-26 13:08:49,000 >> Model config Qwen3Config {
+  "architectures": [
+    "Qwen3ForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "dtype": "bfloat16",
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 1024,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_types": [
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention"
+  ],
+  "max_position_embeddings": 40960,
+  "max_window_layers": 28,
+  "model_type": "qwen3",
+  "num_attention_heads": 16,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 8,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000,
+  "sliding_window": null,
+  "tie_word_embeddings": true,
+  "transformers_version": "4.57.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,000 >> loading file vocab.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,000 >> loading file merges.txt
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,000 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,000 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,001 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,001 >> loading file tokenizer_config.json
+[INFO|tokenization_utils_base.py:2093] 2025-11-26 13:08:49,001 >> loading file chat_template.jinja
+[INFO|tokenization_utils_base.py:2364] 2025-11-26 13:08:49,136 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|2025-11-26 13:08:49] llamafactory.data.loader:143 >> Loading dataset identity.json...
+[INFO|tokenization_utils_base.py:2364] 2025-11-26 13:08:49,296 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[INFO|2025-11-26 13:08:49] llamafactory.data.loader:143 >> Loading dataset identity.json...
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+2025:11:26-13:08:49:(140884) |CCL_INFO| process launcher: hydra, local_proc_idx: 1, local_proc_count: 2
+2025:11:26-13:08:49:(140884) |CCL_INFO| initializing level-zero api
+2025:11:26-13:08:49:(140884) |CCL_INFO| initializing level-zero
+2025:11:26-13:08:49:(140884) |CCL_INFO| Total hardware threads: 1280
+2025:11:26-13:08:49:(140884) |CCL_INFO| auto tune with port counts enabled
+2025:11:26-13:08:49:(140884) |CCL_INFO| ze fabric ports: 0 were able to be detected
+2025:11:26-13:08:49:(140884) |CCL_INFO| initialized level-zero
+2025:11:26-13:08:49:(140884) |CCL_INFO| could not initialize umf api
+2025:11:26-13:08:49:(140884) |CCL_INFO| OS info: { Linux b60 6.14.0-1006-intel #6-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  1 00:03:01 UTC 2025 x86_64 }
+Converting format of dataset (num_proc=16): 182 examples [00:00, 246.15 examples/s]       
+[INFO|2025-11-26 13:08:51] llamafactory.data.loader:143 >> Loading dataset alpaca_en_demo.json...
+Converting format of dataset (num_proc=16): 1998 examples [00:00, 2470.57 examples/s]       
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+2025:11:26-13:08:51:(140878) |CCL_WARN| value of CCL_LOG_LEVEL changed to be info (default:warn)
+2025:11:26-13:08:51:(140878) |CCL_WARN| value of CCL_WORKER_COUNT changed to be 4 (default:1)
+2025:11:26-13:08:51:(140878) |CCL_WARN| value of CCL_ZE_IPC_EXCHANGE changed to be sockets (default:pidfd)
+2025:11:26-13:08:51:(140878) |CCL_INFO| process launcher: hydra, local_proc_idx: 0, local_proc_count: 2
+2025:11:26-13:08:51:(140878) |CCL_INFO| initializing level-zero api
+2025:11:26-13:08:51:(140878) |CCL_INFO| initializing level-zero
+2025:11:26-13:08:51:(140878) |CCL_INFO| Total hardware threads: 1280
+2025:11:26-13:08:51:(140878) |CCL_INFO| auto tune with port counts enabled
+2025:11:26-13:08:51:(140878) |CCL_INFO| ze fabric ports: 0 were able to be detected
+2025:11:26-13:08:51:(140878) |CCL_INFO| initialized level-zero
+2025:11:26-13:08:51:(140878) |CCL_INFO| could not initialize umf api
+2025:11:26-13:08:51:(140878) |CCL_INFO| OS info: { Linux b60 6.14.0-1006-intel #6-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  1 00:03:01 UTC 2025 x86_64 }
+[cli_0]: write_line error; fd=9 buf=:cmd=init pmi_version=1 pmi_subversion=1
+:
+system msg for write_line failure : Broken pipe
+[cli_0]: Unable to write to PMI_fd
+[cli_0]: write_line error; fd=9 buf=:cmd=get_appnum
+:
+system msg for write_line failure : Broken pipe
+Abort(1090831) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init_thread: Unknown error class, error stack:
+MPIR_Init_thread(196): 
+MPID_Init(1612)......: 
+MPIR_pmi_init(142)...: PMI_Get_appnum returned -1
+[cli_0]: write_line error; fd=9 buf=:cmd=abort exitcode=1090831
+:
+system msg for write_line failure : Broken pipe
+[cli_0]: write_line error; fd=9 buf=:cmd=init pmi_version=1 pmi_subversion=1
+:
+system msg for write_line failure : Invalid argument
+[cli_0]: Unable to write to PMI_fd
+[cli_0]: write_line error; fd=9 buf=:cmd=get_appnum
+:
+system msg for write_line failure : Invalid argument
+Abort(1090831) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init_thread: Unknown error class, error stack:
+MPIR_Init_thread(196): 
+MPID_Init(1612)......: 
+MPIR_pmi_init(142)...: PMI_Get_appnum returned -1
+[cli_0]: write_line error; fd=9 buf=:cmd=abort exitcode=1090831
+:
+system msg for write_line failure : Invalid argument
+Converting format of dataset (num_proc=16): 100%|██████████| 91/91 [00:00<?, ? examples/s]E1126 13:08:52.560000 140616 site-packages/torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: -11) local_rank: 0 (pid: 140878) of binary: /root/anaconda3/envs/b60/bin/python3.10
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/b60/bin/torchrun", line 7, in <module>
+    sys.exit(main())
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+/root/LLaMA-Factory/src/llamafactory/launcher.py FAILED
+--------------------------------------------------------
+Failures:
+[1]:
+  time      : 2025-11-26_13:08:52
+  host      : b60
+  rank      : 1 (local_rank: 1)
+  exitcode  : -11 (pid: 140879)
+  error_file: <N/A>
+  traceback : Signal 11 (SIGSEGV) received by PID 140879
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-11-26_13:08:52
+  host      : b60
+  rank      : 0 (local_rank: 0)
+  exitcode  : -11 (pid: 140878)
+  error_file: <N/A>
+  traceback : Signal 11 (SIGSEGV) received by PID 140878
+========================================================
+Converting format of dataset (num_proc=16): 182 examples [00:00, 213.69 examples/s]       
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/b60/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/root/anaconda3/envs/b60/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/root/LLaMA-Factory/src/llamafactory/cli.py", line 31, in <module>
+    main()
+  File "/root/LLaMA-Factory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/root/LLaMA-Factory/src/llamafactory/launcher.py", line 115, in launch
+    process = subprocess.run(
+  File "/root/anaconda3/envs/b60/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['torchrun', '--nnodes', '1', '--node_rank', '0', '--nproc_per_node', '2', '--master_addr', '127.0.0.1', '--master_port', '51481', '/root/LLaMA-Factory/src/llamafactory/launcher.py', 'examples/train_lora/qwen3-0.6B_lora_sft.yaml']' returned non-zero exit status 1.
+[INFO|2025-11-26 13:08:52] llamafactory.data.loader:143 >> Loading dataset alpaca_en_demo.json...
+Converting format of dataset (num_proc=16): 1998 examples [00:00, 2354.95 examples/s]       
+/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+2025:11:26-13:08:54:(140883) |CCL_INFO| process launcher: hydra, local_proc_idx: 1, local_proc_count: 2
+2025:11:26-13:08:54:(140883) |CCL_INFO| initializing level-zero api
+2025:11:26-13:08:54:(140883) |CCL_INFO| initializing level-zero
+2025:11:26-13:08:54:(140883) |CCL_INFO| Total hardware threads: 1280
+2025:11:26-13:08:54:(140883) |CCL_INFO| auto tune with port counts enabled
+2025:11:26-13:08:54:(140883) |CCL_INFO| ze fabric ports: 0 were able to be detected
+2025:11:26-13:08:54:(140883) |CCL_INFO| initialized level-zero
+2025:11:26-13:08:54:(140883) |CCL_INFO| could not initialize umf api
+2025:11:26-13:08:54:(140883) |CCL_INFO| OS info: { Linux b60 6.14.0-1006-intel #6-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug  1 00:03:01 UTC 2025 x86_64 }
+[cli_1]: write_line error; fd=10 buf=:cmd=init pmi_version=1 pmi_subversion=1
+:
+system msg for write_line failure : Broken pipe
+[cli_1]: Unable to write to PMI_fd
+[cli_1]: write_line error; fd=10 buf=:cmd=get_appnum
+:
+system msg for write_line failure : Broken pipe
+Abort(1090831) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init_thread: Unknown error class, error stack:
+MPIR_Init_thread(196): 
+MPID_Init(1612)......: 
+MPIR_pmi_init(142)...: PMI_Get_appnum returned -1
+[cli_1]: write_line error; fd=10 buf=:cmd=abort exitcode=1090831
+:
+system msg for write_line failure : Broken pipe
+[cli_1]: readline failed
+[cli_1]: write_line error; fd=10 buf=:cmd=get_maxes
+:
+system msg for write_line failure : Broken pipe
+[cli_1]: write_line error; fd=10 buf=:cmd=get_appnum
+:
+system msg for write_line failure : Broken pipe
+Abort(1090831) on node 0 (rank 0 in comm 0): Fatal error in PMPI_Init_thread: Unknown error class, error stack:
+MPIR_Init_thread(196): 
+MPID_Init(1612)......: 
+MPIR_pmi_init(142)...: PMI_Get_appnum returned -1
+[cli_1]: write_line error; fd=10 buf=:cmd=abort exitcode=1090831
+:
+system msg for write_line failure : Broken pipe
+W1126 13:08:55.240000 140655 site-packages/torch/distributed/elastic/multiprocessing/api.py:900] Sending process 140884 closing signal SIGTERM
+E1126 13:08:55.454000 140655 site-packages/torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: -11) local_rank: 0 (pid: 140883) of binary: /root/anaconda3/envs/b60/bin/python3.10
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/b60/bin/torchrun", line 7, in <module>
+    sys.exit(main())
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/root/anaconda3/envs/b60/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+/root/LLaMA-Factory/src/llamafactory/launcher.py FAILED
+--------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2025-11-26_13:08:55
+  host      : b60
+  rank      : 0 (local_rank: 0)
+  exitcode  : -11 (pid: 140883)
+  error_file: <N/A>
+  traceback : Signal 11 (SIGSEGV) received by PID 140883
+========================================================
+Traceback (most recent call last):
+  File "/root/anaconda3/envs/b60/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/root/anaconda3/envs/b60/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/root/LLaMA-Factory/src/llamafactory/cli.py", line 31, in <module>
+    main()
+  File "/root/LLaMA-Factory/src/llamafactory/cli.py", line 24, in main
+    launcher.launch()
+  File "/root/LLaMA-Factory/src/llamafactory/launcher.py", line 115, in launch
+    process = subprocess.run(
+  File "/root/anaconda3/envs/b60/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['torchrun', '--nnodes', '1', '--node_rank', '0', '--nproc_per_node', '2', '--master_addr', '127.0.0.1', '--master_port', '45265', '/root/LLaMA-Factory/src/llamafactory/launcher.py', 'examples/train_lora/qwen3-0.6B_lora_sft.yaml']' returned non-zero exit status 1.
+ ```
+</details
