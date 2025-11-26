@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 
 ## 设置环境变量开始多机训练
-```bash
+```python
 export ZE_AFFINITY_MASK=0.1       # 两张 GPU
 export CCL_WORKER_COUNT=2
 export CCL_LOG_LEVEL=info
@@ -47,7 +47,9 @@ export FI_PROVIDER=tcp
 export CCL_ZE_IPC_EXCHANGE=sockets
 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
 ````
- - 开始调用了？
+<details>
+  - 我很奇怪的就是训练过的耗时和用DeepSpeed差不多
+<summary>点击展开训练过程</summary>
 ```bash
 [INFO|2025-11-26 12:43:38] llamafactory.launcher:143 >> Initializing 2 distributed tasks at: 127.0.0.1:36775
 W1126 12:43:39.684000 4016406 site-packages/torch/distributed/run.py:774] 
@@ -625,5 +627,89 @@ The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and g
 {'loss': 1.3937, 'grad_norm': 0.5986014008522034, 'learning_rate': 9.451192254041758e-05, 'epoch': 0.73}                                          
 {'loss': 1.4793, 'grad_norm': 0.8447734117507935, 'learning_rate': 9.005005472346924e-05, 'epoch': 0.88}                                          
 {'loss': 1.3035, 'grad_norm': 0.7054071426391602, 'learning_rate': 8.444834595378434e-05, 'epoch': 1.01}                                          
- 38%|████████████████████████████████████████▋                                                                   | 78/207 [03:34<05:51,  2.72s/it]
-````
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████| 207/207 [09:16<00:00,  2.69s/it]
+[INFO|trainer.py:4309] 2025-11-26 12:53:10,334 >> Saving model checkpoint to saves/Kllama_Qwen3-0.6B
+[INFO|configuration_utils.py:763] 2025-11-26 12:53:10,347 >> loading configuration file /root/models/Qwen3-0.6B/config.json
+[INFO|configuration_utils.py:839] 2025-11-26 12:53:10,348 >> Model config Qwen3Config {
+  "architectures": [
+    "Qwen3ForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 151643,
+  "dtype": "bfloat16",
+  "eos_token_id": 151645,
+  "head_dim": 128,
+  "hidden_act": "silu",
+  "hidden_size": 1024,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_types": [
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention",
+    "full_attention"
+  ],
+  "max_position_embeddings": 40960,
+  "max_window_layers": 28,
+  "model_type": "qwen3",
+  "num_attention_heads": 16,
+  "num_hidden_layers": 28,
+  "num_key_value_heads": 8,
+  "rms_norm_eps": 1e-06,
+  "rope_scaling": null,
+  "rope_theta": 1000000,
+  "sliding_window": null,
+  "tie_word_embeddings": true,
+  "transformers_version": "4.57.1",
+  "use_cache": true,
+  "use_sliding_window": false,
+  "vocab_size": 151936
+}
+
+[INFO|tokenization_utils_base.py:2421] 2025-11-26 12:53:10,477 >> chat template saved in saves/Kllama_Qwen3-0.6B/chat_template.jinja
+[INFO|tokenization_utils_base.py:2590] 2025-11-26 12:53:10,478 >> tokenizer config file saved in saves/Kllama_Qwen3-0.6B/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2599] 2025-11-26 12:53:10,478 >> Special tokens file saved in saves/Kllama_Qwen3-0.6B/special_tokens_map.json
+***** train metrics *****
+  epoch                    =        3.0
+  total_flos               =  1351978GF
+  train_loss               =     1.3686
+  train_runtime            = 0:09:16.03
+  train_samples_per_second =      5.881
+  train_steps_per_second   =      0.372
+Figure saved at: saves/Kllama_Qwen3-0.6B/training_loss.png
+[WARNING|2025-11-26 12:53:10] llamafactory.extras.ploting:148 >> No metric eval_loss to plot.
+[WARNING|2025-11-26 12:53:10] llamafactory.extras.ploting:148 >> No metric eval_accuracy to plot.
+[INFO|modelcard.py:456] 2025-11-26 12:53:10,747 >> Dropping the following result as it does not have all the necessary fields:
+{'task': {'name': 'Causal Language Modeling', 'type': 'text-generation'}}
+2025:11:26-12:53:10:(4016676) |CCL_INFO| finalizing atl-ofi
+2025:11:26-12:53:10:(4016676) |CCL_INFO| finalized atl-ofi
+2025:11:26-12:53:11:(4016677) |CCL_INFO| finalizing level-zero
+2025:11:26-12:53:11:(4016677) |CCL_INFO| finalized level-zero
+2025:11:26-12:53:11:(4016676) |CCL_INFO| finalizing level-zero
+2025:11:26-12:53:11:(4016676) |CCL_INFO| finalized level-zero                                                                 | 78/207 [03:34<05:51,  2.72s/it]
+</details> ```
