@@ -87,3 +87,80 @@ Intel(R) Graphics [0xe211]
 - Git commit: 591fc9ed025100c40a2687431a7d83a19978e42d
 - Default data directory: detected
 ````
+
+---
+
+## 第3步：简单训练模型，确保可用性
+ - 下载到本地一个小模型，如Qwen3
+<img width="319" height="358" alt="image" src="https://github.com/user-attachments/assets/e6b33f15-46a1-4876-b248-762d53ddd841" />
+ 
+ - 在如下路径下，创建一个/root/LLaMA-Factory/examples/train_lora/qwen3-0.6B_lora_sft.yaml文件写入如下内容
+
+```bash
+### model
+model_name_or_path: /root/models/Qwen3-0.6B
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 8
+lora_target: all
+
+### dataset
+dataset: identity, alpaca_en_demo
+template: qwen3_nothink
+cutoff_len: 2048
+max_samples: 100000
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: saves/Kllama_Qwen3-0.6B
+logging_steps: 10
+save_steps: 200
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+report_to: none  # choices: [none, wandb, tensorboard, swanlab, mlflow]
+
+### trainB
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-4
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### ktransformers
+use_kt: false # use KTransformers as LoRA sft backend
+kt_optimize_rule: examples/kt_optimize_rules/Qwen3Moe-sft-amx.yaml
+cpu_infer: 32
+chunk_size: 8192
+````
+ - 启动训练
+
+```bash
+# 单卡 
+llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
+# 多卡
+FORCE_TORCHRUN=1 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
+````
+<img width="1484" height="1026" alt="image" src="https://github.com/user-attachments/assets/0ea60cb4-ac9a-4f35-933a-b9ce1cc776c9" />
+
+<img width="1259" height="321" alt="image" src="https://github.com/user-attachments/assets/0c102dbb-2633-4007-bcee-988aa8d8b424" />
+
+ - 监控GPU情况
+```bash
+watch -n 0.1 xpu-smi -d 0 -j
+````
+<img width="786" height="1037" alt="image" src="https://github.com/user-attachments/assets/11dfae0c-1f4f-4b52-b430-d18ef2d0eead" />
+
+
+<img width="666" height="1023" alt="image" src="https://github.com/user-attachments/assets/80d2184e-5b36-4ff0-b348-6b3d854baddf" />
+
