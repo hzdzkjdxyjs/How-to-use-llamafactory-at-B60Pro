@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
 
 ## 设置环境变量开始多机训练
-```python
+```bash
 export ZE_AFFINITY_MASK=0,1       
 export CCL_WORKER_COUNT=2
 export CCL_LOG_LEVEL=info
