@@ -148,12 +148,17 @@ chunk_size: 8192
 ```bash
 # 单卡 
 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
-# 多卡
-FORCE_TORCHRUN=1 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
 ````
 <img width="1484" height="1026" alt="image" src="https://github.com/user-attachments/assets/0ea60cb4-ac9a-4f35-933a-b9ce1cc776c9" />
 
 <img width="1259" height="321" alt="image" src="https://github.com/user-attachments/assets/0c102dbb-2633-4007-bcee-988aa8d8b424" />
+
+```bash
+# 多卡
+FORCE_TORCHRUN=1 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
+````
+
+<img width="1514" height="1012" alt="image" src="https://github.com/user-attachments/assets/3801b700-a305-4817-8f4b-2c6ed7e6c190" />
 
  - 监控GPU情况
 ```bash
