@@ -47,10 +47,11 @@ export FI_PROVIDER=tcp
 export CCL_ZE_IPC_EXCHANGE=sockets
 llamafactory-cli train examples/train_lora/qwen3-0.6B_lora_sft.yaml
 ````
-<details>
+
   - 我很奇怪的就是训练过的耗时和用DeepSpeed差不多
-<summary>点击展开训练过程</summary>
-```bash
+<details><summary> 点击展开训练过程 </summary>
+
+```
 [INFO|2025-11-26 12:43:38] llamafactory.launcher:143 >> Initializing 2 distributed tasks at: 127.0.0.1:36775
 W1126 12:43:39.684000 4016406 site-packages/torch/distributed/run.py:774] 
 W1126 12:43:39.684000 4016406 site-packages/torch/distributed/run.py:774] *****************************************
@@ -711,6 +712,6 @@ Figure saved at: saves/Kllama_Qwen3-0.6B/training_loss.png
 2025:11:26-12:53:11:(4016677) |CCL_INFO| finalizing level-zero
 2025:11:26-12:53:11:(4016677) |CCL_INFO| finalized level-zero
 2025:11:26-12:53:11:(4016676) |CCL_INFO| finalizing level-zero
-2025:11:26-12:53:11:(4016676) |CCL_INFO| finalized level-zero                                                                 | 78/207 [03:34<05:51,  2.72s/it]
-````
-</details> 
+2025:11:26-12:53:11:(4016676) |CCL_INFO| finalized level-zero                                                                 
+ ```
+</details>
